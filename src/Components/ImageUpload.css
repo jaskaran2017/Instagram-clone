@@ -1,0 +1,13 @@
+.image__upload {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  border: 1px solid green;
+  margin-left: 50%;
+  margin-top: 1rem;
+  background-color: white;
+  padding: 20px;
+}
+.progressBar {
+  max-width: 300px;
+}
