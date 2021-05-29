@@ -22,3 +22,24 @@
 .post__avatar {
   margin-right: 10px;
 }
+.post_commentBox {
+  display: flex;
+  margin-top: 20px;
+}
+.post_input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-top: 1px solid lightgray;
+}
+.post_button {
+  flex: 0;
+  border: none;
+  border-top: 1px solid lightgray;
+  /* color: lightskyblue; */
+  background-color: transparent;
+  font-weight: bold;
+}
+.post_comments {
+  padding: 15px;
+}

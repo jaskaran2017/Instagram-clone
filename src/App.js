@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import { Button, Input } from "@material-ui/core";
 import ImageUpload from "./Components/ImageUpload";
-
+import InstagramEmbed from "react-instagram-embed";
 ///////////////////////////
 function getModalStyle() {
   const top = 50;
@@ -89,19 +89,10 @@ function App() {
       .catch((error) => alert(error.message));
     setOpen(false);
   };
-////////////////////////////////////////
+  ////////////////////////////////////////
 
   return (
     <div className="App">
-      {/*now will check by optional chaining that if the user is present/loggedin
-      or not present using "?" then our app will allow or denie the upload
-      request accordingly.*/}
-
-      {user?.displayName ? (
-        <ImageUpload username={user.displayName} />
-      ) : (
-        <h3>Sorry you need to LOGIN to upload</h3>
-      )}
       <Modal open={openSignIn} onClose={() => setOpenSignIn(false)}>
         <div style={modalStyle} className={classes.paper}>
           <form className="app__signup">
@@ -172,26 +163,55 @@ function App() {
           src="https://th.bing.com/th/id/OIF.GiknaeXS1LPtIpVtwjNVnw?w=100&h=30&c=7&o=5&pid=1.7"
           alt="LOGO"
         />
+        {user ? (
+          <Button onClick={() => auth.signOut()}>LOGOUT</Button>
+        ) : (
+          <div className="loginContainer">
+            <Button onClick={() => setOpenSignIn(true)}>SIGNIN</Button>
+            <Button onClick={() => setOpen(true)}>SIGNUP</Button>
+          </div>
+        )}
       </div>
-      {user ? (
-        <Button onClick={() => auth.signOut()}>LOGOUT</Button>
-      ) : (
-        <div className="loginContaainer">
-          <Button onClick={() => setOpenSignIn(true)}>SIGNIN</Button>
-          <Button onClick={() => setOpen(true)}>SIGNUP</Button>
+      {/* <h1>Hello Instagram 🛰️ </h1> */}
+      {/* posts */}
+      <div className="app_posts">
+        <div className="app_postleft">
+          {posts.map(({ id, post }) => (
+            <Post
+              key={id}
+              postId={id}
+              user={user}
+              username={post.username}
+              caption={post.caption}
+              imageUrl={post.imageUrl}
+            />
+          ))}
         </div>
+
+        <div className="app_postright">
+          <InstagramEmbed
+            url="https://instagr.am/p/Zw9o4/"
+            maxWidth={320}
+            hideCaption={false}
+            containerTagName="div"
+            protocol=""
+            injectScript
+            onLoading={() => {}}
+            onSuccess={() => {}}
+            onAfterRender={() => {}}
+            onFailure={() => {}}
+          />
+        </div>
+      </div>
+      {/*now will check by optional chaining that if the user is present/loggedin
+      or not present using "?" then our app will allow or denie the upload
+      request accordingly.*/}
+
+      {user?.displayName ? (
+        <ImageUpload username={user.displayName} />
+      ) : (
+        <h3>Sorry you need to LOGIN to upload</h3>
       )}
-      <h1>Hello Instagram 🛰️ </h1>
-      {/* posts */}
-      {posts.map(({ id, post }) => (
-        <Post
-          key={id}
-          username={post.username}
-          caption={post.caption}
-          imageUrl={post.imageUrl}
-        />
-      ))}
-      {/* posts */}
     </div>
   );
 }
